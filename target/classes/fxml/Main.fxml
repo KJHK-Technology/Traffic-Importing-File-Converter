@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller=".MainController">
+   <children>
+      <Button layoutX="21.0" layoutY="29.0" mnemonicParsing="false" text="Select .tsv file" />
+      <Label fx:id="lblOutputLoc" layoutX="126.0" layoutY="135.0" prefHeight="17.0" prefWidth="230.0" text="None" />
+      <Button layoutX="21.0" layoutY="131.0" mnemonicParsing="false" text="Output Location:" />
+      <Label fx:id="lblInputFile" layoutX="109.0" layoutY="33.0" prefHeight="17.0" prefWidth="230.0" text="None" />
+      <TextArea layoutX="41.0" layoutY="186.0" prefHeight="200.0" prefWidth="463.0" />
+      <Label fx:id="lblInfo" layoutX="41.0" layoutY="169.0" prefHeight="17.0" prefWidth="230.0" text="Info" />
+   </children>
+</AnchorPane>
