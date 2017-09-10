@@ -17,7 +17,7 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         
-        stage.setTitle("TSV Traffic File Converter");
+        stage.setTitle("TSV Traffic File Converter v2.1");
         stage.setScene(scene);
         stage.show();
     }

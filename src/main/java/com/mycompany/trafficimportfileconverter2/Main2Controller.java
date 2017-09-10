@@ -5,6 +5,8 @@
  */
 package com.mycompany.trafficimportfileconverter2;
 
+import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
+import com.sun.javafx.application.HostServicesDelegate;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -57,6 +59,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BackgroundFill;
 import javafx.stage.DirectoryChooser;
@@ -151,6 +154,7 @@ public class Main2Controller implements Initializable {
     private Thread myThread;
     private static ArrayList<String> myfiles = new ArrayList<>();
     private static final Object lock = new Object();
+    public static  String helpurl = "https://github.com/KJHK-Technology/Traffic-Importing-File-Converter/tree/master";
 
     public static void addToFiles(ArrayList<String> newstuff) {
         synchronized (lock) {
@@ -251,6 +255,9 @@ public class Main2Controller implements Initializable {
         filechooser.getExtensionFilters().add(new ExtensionFilter("Tab Separated Values", "*.tsv", "*.TSV"));
 
         autoSearch();
+        
+        log("Help document located:");
+        log(helpurl);
     }
 
     private void initDateArrays() {
@@ -354,7 +361,9 @@ public class Main2Controller implements Initializable {
                 datePickers[i].setValue(dates.get(i));
             } catch (Exception e) {
                 System.out.println("failed to set datePicker:" + i + " " + e);
+                log("File appears invalid. Please select a different file and try again.");
                 e.printStackTrace();
+                return;
             }
         }
     }
@@ -393,6 +402,13 @@ public class Main2Controller implements Initializable {
             Logger.getLogger(Main2Controller.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Main2Controller.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Logger.getLogger(Main2Controller.class.getName()).log(Level.SEVERE, null, e);
+            String str = "It appears like the file contents were invalid.\n"
+                    + "Please try again or a different file.";
+            System.out.println(str);
+            log(str);
+
         } finally {
             try {
                 TSVFile.close();
@@ -877,5 +893,6 @@ public class Main2Controller implements Initializable {
             }).findAny();
         }
     }
+
 
 }
