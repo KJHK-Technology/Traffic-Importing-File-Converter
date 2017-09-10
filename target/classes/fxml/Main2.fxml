@@ -1,18 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 
-<AnchorPane id="AnchorPane" fx:id="BigPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.trafficimportfileconverter2.Main2Controller">
+<AnchorPane id="AnchorPane" fx:id="BigPane" prefHeight="670.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.trafficimportfileconverter2.Main2Controller">
    <children>
-      <Button fx:id="btnSelect" layoutX="31.0" layoutY="39.0" mnemonicParsing="false" onAction="#onBtnSelect" text="Select .tsv file" />
-      <Label fx:id="lblOutputLoc" layoutX="146.0" layoutY="145.0" prefHeight="17.0" prefWidth="452.0" text="None" />
+      <Button fx:id="btnSelect" layoutX="31.0" layoutY="8.0" mnemonicParsing="false" onAction="#onBtnSelect" text="Select .tsv file" />
+      <Label fx:id="lblOutputLoc" layoutX="146.0" layoutY="145.0" prefHeight="17.0" prefWidth="463.0" text="None" />
       <Button fx:id="btnOutputLocation" layoutX="31.0" layoutY="141.0" mnemonicParsing="false" onAction="#onBtnOutputLocation" text="Output Location:" />
-      <Label fx:id="lblInputFile" layoutX="127.0" layoutY="43.0" prefHeight="17.0" prefWidth="478.0" text="None" />
-      <TextArea fx:id="txtAreaOutput" layoutX="51.0" layoutY="196.0" prefHeight="200.0" prefWidth="463.0" />
-      <Label fx:id="lblInfo" layoutX="51.0" layoutY="179.0" prefHeight="17.0" prefWidth="230.0" text="Info" />
-      <Button fx:id="btnGo" layoutX="339.0" layoutY="64.0" mnemonicParsing="false" onAction="#onBtnGo" prefHeight="64.0" prefWidth="88.0" text="Go" />
+      <Label fx:id="lblInputFile" layoutX="127.0" layoutY="12.0" prefHeight="17.0" prefWidth="478.0" text="None" />
+      <TextArea fx:id="txtAreaOutput" layoutX="39.0" layoutY="450.0" prefHeight="200.0" prefWidth="463.0" />
+      <Label fx:id="lblInfo" layoutX="41.0" layoutY="433.0" prefHeight="17.0" prefWidth="230.0" text="Info" />
+      <Button fx:id="btnGo" layoutX="425.0" layoutY="58.0" mnemonicParsing="false" onAction="#onBtnGo" prefHeight="64.0" prefWidth="88.0" text="Go" />
+      <GridPane layoutX="39.0" layoutY="166.0" prefHeight="232.0" prefWidth="453.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="31.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.0" minWidth="10.0" prefWidth="146.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="90.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="422.0" minWidth="10.0" prefWidth="187.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <DatePicker fx:id="date1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="date2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DatePicker fx:id="date3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="date4" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <DatePicker fx:id="date5" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <DatePicker fx:id="date6" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <DatePicker fx:id="date7" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <CheckBox fx:id="chkDay1" mnemonicParsing="false" GridPane.rowIndex="2" />
+            <CheckBox fx:id="chkDay2" mnemonicParsing="false" GridPane.rowIndex="3" />
+            <CheckBox fx:id="chkDay3" mnemonicParsing="false" GridPane.rowIndex="4" />
+            <CheckBox fx:id="chkDay4" mnemonicParsing="false" GridPane.rowIndex="5" />
+            <CheckBox fx:id="chkDay5" mnemonicParsing="false" GridPane.rowIndex="6" />
+            <CheckBox fx:id="chkDay6" mnemonicParsing="false" GridPane.rowIndex="7" />
+            <CheckBox fx:id="chkDay7" mnemonicParsing="false" GridPane.rowIndex="8" />
+            <CheckBox fx:id="chkAutoInc" mnemonicParsing="false" selected="true" text="Auto Increment from this date" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <CheckBox fx:id="chkSelectAll" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" />
+            <Label fx:id="lblSelectAll" onMouseClicked="#selectAllClicked" prefHeight="17.0" prefWidth="149.0" text="Select All" GridPane.columnIndex="1" />
+            <Label fx:id="lbl1" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="lbl2" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="lbl3" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label fx:id="lbl4" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label fx:id="lbl5" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label fx:id="lbl6" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label fx:id="lbl7" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <Line endX="100.0" startX="-100.0" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>
