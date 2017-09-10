@@ -272,7 +272,7 @@ public class Main2Controller implements Initializable {
                 System.out.println("I've been touched!!!");
                 if (chkAutoInc.isSelected() && datePickers[0].getValue() != null) {
                     for (int i = 1; i < dateChecks.length; i++) {
-                        datePickers[i].setValue(datePickers[i - 1].getValue().plusDays(1));                        
+                        datePickers[i].setValue(datePickers[i - 1].getValue().plusDays(1));
                     }
                 }
             }
@@ -297,6 +297,7 @@ public class Main2Controller implements Initializable {
                     dates.set(x, newValue);
                     dayLabels[x].setText(newValue.getDayOfWeek().name());
                     datePickers[x].setStyle("-fx-background-color: red");
+                    dayLabels[x].setStyle("-fx-background-color: red");
                 }
             });
         }
@@ -406,7 +407,7 @@ public class Main2Controller implements Initializable {
 
         //threadedHandledFileConversion(getInputFile());
         myfiles.addAll(handleFileWriting());
-        
+
         if (null == myThread || !myThread.isAlive()) {
             myThread = (new Thread(() -> {
                 try {
@@ -516,7 +517,10 @@ public class Main2Controller implements Initializable {
                     Optional<ButtonType> answer = alert.showAndWait();
                     if (answer.isPresent() && answer.get().getButtonData().equals(ButtonData.OK_DONE)) {
                         writeFile(toWideOrbitTitle(x), data.get(index));
-                        UI(()-> datePickers[index].setStyle("-fx-background-color: yellow"));
+                        UI(() -> {
+                            datePickers[index].setStyle("-fx-background-color: yellow");
+                            dayLabels[index].setStyle("-fx-background-color: yellow");
+                        });
                         filenames.add(toWideOrbitTitle(x));
                     } else {
                         log("Skipping: " + alreadyThereFile.getName());
@@ -524,7 +528,10 @@ public class Main2Controller implements Initializable {
                 });
             } else {
                 writeFile(toWideOrbitTitle(x), data.get(index));
-                UI(()->datePickers[index].setStyle("-fx-background-color: yellow"));
+                UI(() -> {
+                    datePickers[index].setStyle("-fx-background-color: yellow");
+                    dayLabels[index].setStyle("-fx-background-color: yellow");
+                        });
                 filenames.add(toWideOrbitTitle(x));
             }
         });
@@ -796,9 +803,12 @@ public class Main2Controller implements Initializable {
                     }).findAny();
                     if (res.isPresent()) {
                         myfiles.remove(res.get());
-                        DatePicker dp = findThisDP(res.get());
-                        if (null != dp) {
-                            UI(()->dp.setStyle("-fx-background-color: lightgreen"));
+                        int dpi = findThisDP(res.get());
+                        if (-1 != dpi) {
+                            UI(() -> {
+                                datePickers[dpi].setStyle("-fx-background-color: lightgreen");
+                                dayLabels[dpi].setStyle("-fx-background-color: lightgreen");
+                            });
                         }
                         log("Wide Orbit CONSUMED: " + filename);
 
@@ -827,13 +837,13 @@ public class Main2Controller implements Initializable {
 
     }
 
-    private DatePicker findThisDP(String str) {
+    private int findThisDP(String str) {
         for (int i = 0; i < datePickers.length; i++) {
             if (toWideOrbitTitle(datePickers[i].getValue()).compareTo(str) == 0) {
-                return datePickers[i];
+                return i;
             }
         }
-        return null;
+        return -1;
     }
 
 }
