@@ -17,7 +17,7 @@
       <Label fx:id="lblOutputLoc" layoutX="146.0" layoutY="145.0" prefHeight="17.0" prefWidth="463.0" text="None" />
       <Button fx:id="btnOutputLocation" layoutX="31.0" layoutY="141.0" mnemonicParsing="false" onAction="#onBtnOutputLocation" text="Output Location:" />
       <Label fx:id="lblInputFile" layoutX="127.0" layoutY="12.0" prefHeight="17.0" prefWidth="478.0" text="None" />
-      <TextArea fx:id="txtAreaOutput" layoutX="39.0" layoutY="450.0" prefHeight="200.0" prefWidth="463.0" />
+      <TextArea fx:id="txtAreaOutput" layoutX="39.0" layoutY="450.0" prefHeight="200.0" prefWidth="578.0" />
       <Label fx:id="lblInfo" layoutX="41.0" layoutY="433.0" prefHeight="17.0" prefWidth="230.0" text="Info" />
       <Button fx:id="btnGo" layoutX="425.0" layoutY="58.0" mnemonicParsing="false" onAction="#onBtnGo" prefHeight="64.0" prefWidth="88.0" text="Go" />
       <GridPane layoutX="39.0" layoutY="166.0" prefHeight="232.0" prefWidth="453.0">
