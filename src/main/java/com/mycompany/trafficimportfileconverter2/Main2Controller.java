@@ -149,7 +149,20 @@ public class Main2Controller implements Initializable {
     private ArrayList<LocalDate> dates = new ArrayList<>(7);
     private ArrayList<String> data = new ArrayList<>(7);
     private Thread myThread;
-    private ArrayList<String> myfiles = new ArrayList<>();
+    private static ArrayList<String> myfiles = new ArrayList<>();
+    private static final Object lock = new Object();
+
+    public static void addToFiles(ArrayList<String> newstuff) {
+        synchronized (lock) {
+            myfiles.addAll(newstuff);
+        }
+    }
+
+    public static void removeFromFiles(String fname) {
+        synchronized (lock) {
+            myfiles.remove(fname);
+        }
+    }
 
     public File getInputFile() {
         return inputFile.get();
@@ -406,7 +419,7 @@ public class Main2Controller implements Initializable {
         }
 
         //threadedHandledFileConversion(getInputFile());
-        myfiles.addAll(handleFileWriting());
+        handleFileWriting();
 
         if (null == myThread || !myThread.isAlive()) {
             myThread = (new Thread(() -> {
@@ -494,8 +507,8 @@ public class Main2Controller implements Initializable {
 //        }
 //        return answer;
 //    }
-    private ArrayList<String> handleFileWriting() {
-        ArrayList<String> filenames = new ArrayList<>(dates.size());
+    private void handleFileWriting() {
+        //ArrayList<String> filenames = new ArrayList<>(dates.size());
 
         dates.parallelStream().forEach(x -> {
             int index = dates.indexOf(x);
@@ -521,7 +534,12 @@ public class Main2Controller implements Initializable {
                             datePickers[index].setStyle("-fx-background-color: yellow");
                             dayLabels[index].setStyle("-fx-background-color: yellow");
                         });
-                        filenames.add(toWideOrbitTitle(x));
+                        synchronized (lock) {
+                            myfiles.add(toWideOrbitTitle(x));
+                            System.out.println("Adding: " + toWideOrbitTitle(x));
+                            System.out.println(myfiles.toString());
+
+                        }
                     } else {
                         log("Skipping: " + alreadyThereFile.getName());
                     }
@@ -531,11 +549,12 @@ public class Main2Controller implements Initializable {
                 UI(() -> {
                     datePickers[index].setStyle("-fx-background-color: yellow");
                     dayLabels[index].setStyle("-fx-background-color: yellow");
-                        });
-                filenames.add(toWideOrbitTitle(x));
+                });
+                synchronized (lock) {
+                    myfiles.add(toWideOrbitTitle(x));
+                }
             }
         });
-        return filenames;
     }
 
 //    private void hanldeFileConversion(File file) {
@@ -798,11 +817,12 @@ public class Main2Controller implements Initializable {
                     String filename = filepath.toString();
                     System.out.println("the filename was: " + filename);
                     System.out.println(kind);
-                    Optional<String> res = myfiles.parallelStream().filter(str -> {
-                        return filename.contains(str);
-                    }).findAny();
+                    Optional<String> res = findFile(filename);
                     if (res.isPresent()) {
-                        myfiles.remove(res.get());
+                        System.out.println("BEFORE REMOVAL: " + myfiles.toString());
+                        System.out.println("removing: " + res.get());
+                        removeFromFiles(res.get());
+                        System.out.println("Removed. Now: " + myfiles.toString());
                         int dpi = findThisDP(res.get());
                         if (-1 != dpi) {
                             UI(() -> {
@@ -812,6 +832,9 @@ public class Main2Controller implements Initializable {
                         }
                         log("Wide Orbit CONSUMED: " + filename);
 
+                    } else {
+                        System.out.println("is present was false for: " + filename);
+                        System.out.println(myfiles.toString());
                     }
                     // Reset the key -- this step is critical if you want to
                     // receive further watch events.  If the key is no longer valid,
@@ -823,6 +846,7 @@ public class Main2Controller implements Initializable {
                     if (myfiles.isEmpty()) {
                         key.cancel();
                         log("ALL WRITTEN FILES CONSUMED.");
+                        System.out.println("\n\n\n");
 
                         return;
                     }
@@ -844,6 +868,14 @@ public class Main2Controller implements Initializable {
             }
         }
         return -1;
+    }
+
+    private Optional<String> findFile(String filename) {
+        synchronized (lock) {
+            return myfiles.parallelStream().filter(str -> {
+                return filename.contains(str);
+            }).findAny();
+        }
     }
 
 }
