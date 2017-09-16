@@ -791,7 +791,7 @@ public class Main2Controller implements Initializable {
     }
 
     private String getData(String[] row) {
-        return lineBreaksMatter ? row[2] : mkLineBreaks(row[2]);
+        return lineBreaksMatter ? mkLineBreaks(row[2]) :  row[2];
     }
 
     private void watchForConsumption() throws IOException {
